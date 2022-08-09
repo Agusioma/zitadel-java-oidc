@@ -14,7 +14,7 @@ import java.io.IOException;
 @Component
 public class ZitadelLogoutHandler implements LogoutHandler {
 
-    public static final String ZITADEL_END_SESSION_ENDPOINT = "https://accounts.zitadel.ch/oauth/v2/endsession";
+    public static final String ZITADEL_END_SESSION_ENDPOINT = "http://localhost:8080/oidc/v1/end_session";
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
