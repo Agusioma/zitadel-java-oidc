@@ -7,10 +7,13 @@
   <groupId>org.example</groupId>
   <artifactId>zitadel-java-oidc</artifactId>
   <version>1.0-SNAPSHOT</version>
-
+  <packaging>pom</packaging>
   <name>zitadel-java-oidc</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+
+  <modules>
+    <module>oauth2-server</module>
+    <module>client</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
