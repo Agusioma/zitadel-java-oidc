@@ -9,7 +9,7 @@
 <script defer>
     async function greetme() {
 
-        let response = await fetch("/webapp/api/greetings/me", {credentials: 'include'});
+        let response = await fetch("/webapp/api/ping/me", {credentials: 'include'});
         let payload = await response.json();
 
         console.log(payload);

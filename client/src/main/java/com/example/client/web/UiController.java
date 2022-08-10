@@ -14,8 +14,8 @@ class UiController {
 
     @GetMapping("/")
     public String showIndex(Model model, Authentication auth) {
-        var roleNames = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-        model.addAttribute("roleNames", roleNames);
+        var grantedRoles = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        model.addAttribute("roleNames", grantedRoles);
         return "index";
     }
 }
