@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-class WebClientConfig {
+class ClientWebConfig {
 
     private final TokenAccessor tokenAccessor;
 

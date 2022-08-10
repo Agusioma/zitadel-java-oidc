@@ -12,10 +12,10 @@ import java.util.Map;
 @RestController
 class GreetingsController {
 
-    @GetMapping("/api/greet/me")
-    Object greetme(Authentication auth) {
-        var tokenAttributes = ((BearerTokenAuthentication) auth).getTokenAttributes();
-        var message = "Greetings my friend " + tokenAttributes.get(StandardClaimNames.PREFERRED_USERNAME) + " " + Instant.now();
-        return Map.of("message", message);
+    @GetMapping("/api/ping/me")
+    Object pingMe(Authentication auth) {
+        var tokenDetails = ((BearerTokenAuthentication) auth).getTokenAttributes();
+        var pingEcho = "Hello, " + tokenAttributes.get(StandardClaimNames.PREFERRED_USERNAME) + " Ping successful.";
+        return Map.of("Ping Echo", pingEcho);
     }
 }

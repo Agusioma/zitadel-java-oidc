@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @RequiredArgsConstructor
-class WebSecurityConfig {
+class ClientSecurityConfig {
 
     private final ZitadelLogoutHandler zitadelLogoutHandler;
 

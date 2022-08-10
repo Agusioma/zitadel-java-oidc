@@ -26,28 +26,28 @@ class WebSecurityConfig {
      * <li>JWT converted into Spring token</li>
      * </ul>
      *
-     * @param http security configuration
+     * @param httpSecurity security configuration
      * @throws Exception any error
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityChain(HttpSecurity httpSecurity) throws Exception {
 
-        http.csrf().disable();
+        httpSecurity.csrf().disable();
 
-        http.sessionManagement(smc -> {
-            smc.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        httpSecurity.sessionManagement(it -> {
+            it.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         });
 
-        http.authorizeRequests(arc -> {
+        httpSecurity.authorizeRequests(it -> {
             // declarative route configuration
             // .mvcMatchers("/api").hasAuthority("ROLE_ACCESS")
-            arc.mvcMatchers("/api/**").authenticated();
+            it.mvcMatchers("/api/**").authenticated();
             // add additional routes
-            arc.anyRequest().authenticated(); //
+            it.anyRequest().authenticated(); //
         });
-        http.oauth2ResourceServer().opaqueToken();
+        httpSecurity.oauth2ResourceServer().opaqueToken();
 
-        return http.build();
+        return httpSecurity.build();
     }
 
 }
