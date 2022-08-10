@@ -18,7 +18,7 @@ class ApiController {
     @Qualifier("zitadel")
     private final RestTemplate restTemplate;
 
-    @GetMapping("/ping/me")
+    @GetMapping("/pings/me")
     Object pingServer(Authentication auth) {
         var response = restTemplate.getForObject("http://localhost:18090/api/ping/me", Map.class);
         return response;

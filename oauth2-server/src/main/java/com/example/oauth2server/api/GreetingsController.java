@@ -6,7 +6,6 @@ import org.springframework.security.oauth2.server.resource.authentication.Bearer
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.util.Map;
 
 @RestController
@@ -16,6 +15,6 @@ class GreetingsController {
     Object pingMe(Authentication auth) {
         var tokenDetails = ((BearerTokenAuthentication) auth).getTokenAttributes();
         var pingEcho = "Hello, " + tokenDetails.get(StandardClaimNames.PREFERRED_USERNAME) + " Ping successful.";
-        return Map.of("Ping Echo", pingEcho);
+        return Map.of("ping_echo", pingEcho);
     }
 }
