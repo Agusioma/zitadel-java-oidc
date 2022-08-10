@@ -28,11 +28,9 @@ class ClientSecurityConfig {
             it.anyRequest().fullyAuthenticated();
         });
 
-        // by default spring security oauth2 client does not support PKCE for confidential clients for auth code grant flow,
-        // we explicitly enable the PKCE customization here.
         httpSecurity.oauth2Client(it -> {
-            var oauth2AuthRequestResolver = new DefaultOAuth2AuthorizationRequestResolver( //
-                    clientRegistrationRepository, //
+            var oauth2AuthRequestResolver = new DefaultOAuth2AuthorizationRequestResolver( 
+                    clientRegistrationRepository,
                     OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI //
             );
             // Note: back-ported the OAuth2AuthorizationRequestCustomizers from Spring Security 5.7,
