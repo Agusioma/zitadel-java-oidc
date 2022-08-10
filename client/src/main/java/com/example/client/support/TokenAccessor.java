@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TokenAccessor {
 
-    private final OAuth2AuthorizedClientService authorizedClientService;
+    private final OAuth2AuthorizedClientService oauth2ClientService;
 
     public OAuth2AccessToken retrieveAccessToken() {
         return getAccessToken(SecurityContextHolder.getContext().getAuthentication());
@@ -26,7 +26,7 @@ public class TokenAccessor {
         var authToken = (OAuth2AuthenticationToken) clientAuth;
         var clientId = authToken.getAuthorizedClientRegistrationId();
         var username = clientAuth.getName();
-        var authorizedClient = authorizedClientService.loadAuthorizedClient(clientId, username);
+        var authorizedClient = oauth2ClientService.loadAuthorizedClient(clientId, username);
 
         if (authorizedClient == null) {
             log.warn("Get AccessToken for current user failed: client not found");
@@ -34,9 +34,8 @@ public class TokenAccessor {
         }else{
             var clientAccessToken = authorizedClient.getAccessToken();
             log.debug("Get AccessToken for current user {}: end", clientAuth.getName());
+            return clientAccessToken;
         }
-
-        return accessToken;
 
     }
 }

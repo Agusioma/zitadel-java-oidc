@@ -13,17 +13,15 @@ public class ZitadelGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper
     public static final String ZITADEL_ROLES_CLAIM = "urn:zitadel:iam:org:project:roles";
 
     @Override
-    public Collection<? extends GrantedAuthority> mapAuthorities(Collection<? extends GrantedAuthority> authorities) {
+    public Collection<? extends GrantedAuthority> mapAuthorities(Collection<? extends GrantedAuthority> grantedAuthorities) {
         var mappedAuthorities = new HashSet<GrantedAuthority>();
 
-        authorities.forEach(authority -> {
+        grantedAuthorities.forEach(authority -> {
 
             if (authority instanceof SimpleGrantedAuthority) {
                 mappedAuthorities.add(authority);
-            }
-
-            if (authority instanceof OidcUserAuthority) {
-                addRolesFromUserInfo(mappedAuthorities, (OidcUserAuthority) authority);
+            }else if (authority instanceof OidcUserAuthority) {
+                mapFromUserInfo(mappedAuthorities, (OidcUserAuthority) authority);
             }
 
         });
@@ -31,7 +29,7 @@ public class ZitadelGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper
         return mappedAuthorities;
     }
 
-    private void addRolesFromUserInfo(HashSet<GrantedAuthority> mappedAuthorities, OidcUserAuthority oidcUserAuthority) {
+    private void mapFromUserInfo(HashSet<GrantedAuthority> mappedAuthorities, OidcUserAuthority oidcUserAuthority) {
 
         var userInfo = oidcUserAuthority.getUserInfo();
 
@@ -40,8 +38,8 @@ public class ZitadelGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper
             return;
         }
 
-        roleInfo.keySet().forEach(zitadelRoleName -> {
-            mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + zitadelRoleName));
+        roleInfo.keySet().forEach(zitadelRole -> {
+            mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + zitadelRole));
         });
     }
 

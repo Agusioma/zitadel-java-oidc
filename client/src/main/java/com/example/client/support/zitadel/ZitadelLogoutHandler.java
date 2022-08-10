@@ -14,28 +14,29 @@ import java.io.IOException;
 @Component
 public class ZitadelLogoutHandler implements LogoutHandler {
 
-    public static final String ZITADEL_END_SESSION_ENDPOINT = "http://localhost:8080/oidc/v1/end_session";
+    public static final String END_SESSION_ENDPOINT = "http://localhost:8080/oidc/v1/end_session";
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
 
-        var principal = (DefaultOidcUser) auth.getPrincipal();
-        var idToken = principal.getIdToken();
+        var principalUser = (DefaultOidcUser) auth.getPrincipal();
+        var idToken = principalUser.getIdToken();
 
         log.debug("Propagate logout to zitadel for user. userId={}", idToken.getSubject());
 
         var idTokenValue = idToken.getTokenValue();
-        var defaultRedirectUri = generateAppUri(request);
-        var logoutUrl = createZitadelLogoutUrl(idTokenValue, defaultRedirectUri);
+        var redirectUri = generateUriFromRequest(request);
+        var logoutUrl = createLogoutUrl(idTokenValue, redirectUri);
 
         try {
+            //and then redirect to this URL after logging out
             response.sendRedirect(logoutUrl);
         } catch (IOException e) {
-            log.error("Could not propagate logout for user to zitadel. userId={}", idToken.getSubject(), e);
+            //create your exception handling logic here
         }
     }
 
-    private String generateAppUri(HttpServletRequest request) {
+    private String generateUriFromRequest(HttpServletRequest request) {
         var hostname = request.getServerName() + ":" + request.getServerPort();
         var isStandardHttps = "https".equals(request.getScheme()) && request.getServerPort() == 443;
         var isStandardHttp = "http".equals(request.getScheme()) && request.getServerPort() == 80;
@@ -45,8 +46,8 @@ public class ZitadelLogoutHandler implements LogoutHandler {
         return request.getScheme() + "://" + hostname + request.getContextPath();
     }
 
-    private String createZitadelLogoutUrl(String idTokenValue, String postRedirectUri) {
-        return ZITADEL_END_SESSION_ENDPOINT + //
+    private String createLogoutUrl(String idTokenValue, String postRedirectUri) {
+        return END_SESSION_ENDPOINT + //
                 "?id_token_hint=" + idTokenValue //
                 + "&post_logout_redirect_uri=" + postRedirectUri;
     }

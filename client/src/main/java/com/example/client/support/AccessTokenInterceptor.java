@@ -19,10 +19,11 @@ public class AccessTokenInterceptor implements ClientHttpRequestInterceptor {
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
 
-        var accessToken = tokenAccessor.getAccessTokenForCurrentUser();
+        var grantedAccessToken = tokenAccessor.retrieveAccessToken();
 
-        if (accessToken != null) {
-            request.getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken.getTokenValue());
+        //adding retrieved access token to Bearer Auth header
+        if (grantedAccessToken != null) {
+            request.getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + grantedAccessToken.getTokenValue());
         }
 
         return execution.execute(request, body);
