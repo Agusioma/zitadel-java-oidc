@@ -7,28 +7,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-/**
- * Configuration applied on all web endpoints defined for this
- * application. Any configuration on specific resources is applied
- * in addition to these global rules.
- */
 @Configuration
 @RequiredArgsConstructor
 class ApiSecurityConfig {
 
-    /**
-     * Configures basic security handler per HTTP session.
-     * <p>
-     * <ul>
-     * <li>Stateless session (no session kept server-side)</li>
-     * <li>CORS set up</li>
-     * <li>Require the role "ACCESS" for all api paths</li>
-     * <li>JWT converted into Spring token</li>
-     * </ul>
-     *
-     * @param httpSecurity security configuration
-     * @throws Exception any error
-     */
     @Bean
     public SecurityFilterChain securityChain(HttpSecurity httpSecurity) throws Exception {
 
