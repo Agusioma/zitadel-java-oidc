@@ -19,18 +19,18 @@ class ClientSecurityConfig {
     private final ZitadelLogoutHandler zitadelLogoutHandler;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
+    public SecurityFilterChain securityChain(HttpSecurity httpSecurity, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
 
-        http.authorizeRequests(arc -> {
+        httpSecurity.authorizeRequests(it -> {
             // declarative route configuration
             // add additional routes
-            arc.antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll();
-            arc.anyRequest().fullyAuthenticated();
+            it.antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll();
+            it.anyRequest().fullyAuthenticated();
         });
 
         // by default spring security oauth2 client does not support PKCE for confidential clients for auth code grant flow,
         // we explicitly enable the PKCE customization here.
-        http.oauth2Client(o2cc -> {
+        httpSecurity.oauth2Client(it -> {
             var oauth2AuthRequestResolver = new DefaultOAuth2AuthorizationRequestResolver( //
                     clientRegistrationRepository, //
                     OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI //
@@ -39,20 +39,20 @@ class ClientSecurityConfig {
             // replace with original version once Spring Boot support Spring Security 5.7.
             //oauth2AuthRequestResolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
 
-            o2cc.authorizationCodeGrant().authorizationRequestResolver(oauth2AuthRequestResolver);
+            it.authorizationCodeGrant().authorizationRequestResolver(oauth2AuthRequestResolver);
         });
 
-        http.oauth2Login(o2lc -> {
-            o2lc.userInfoEndpoint().userAuthoritiesMapper(userAuthoritiesMapper());
+        httpSecurity.oauth2Login(it -> {
+            it.userInfoEndpoint().userAuthoritiesMapper(zitadelMapper());
         });
-        http.logout(lc -> {
-            lc.addLogoutHandler(zitadelLogoutHandler);
+        httpSecurity.logout(it -> {
+            it.addLogoutHandler(zitadelLogoutHandler);
         });
 
-        return http.build();
+        return httpSecurity.build();
     }
 
-    private GrantedAuthoritiesMapper userAuthoritiesMapper() {
+    private GrantedAuthoritiesMapper zitadelMapper() {
         return new ZitadelGrantedAuthoritiesMapper();
     }
 }

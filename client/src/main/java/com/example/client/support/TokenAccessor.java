@@ -16,25 +16,26 @@ public class TokenAccessor {
 
     private final OAuth2AuthorizedClientService authorizedClientService;
 
-    public OAuth2AccessToken getAccessTokenForCurrentUser() {
+    public OAuth2AccessToken retrieveAccessToken() {
         return getAccessToken(SecurityContextHolder.getContext().getAuthentication());
     }
 
-    public OAuth2AccessToken getAccessToken(Authentication auth) {
+    public OAuth2AccessToken getAccessToken(Authentication clientAuth) {
 
-        log.debug("Get AccessToken for current user {}: begin", auth.getName());
-        var authToken = (OAuth2AuthenticationToken) auth;
+        log.debug("Get AccessToken for current user {}: begin", clientAuth.getName());
+        var authToken = (OAuth2AuthenticationToken) clientAuth;
         var clientId = authToken.getAuthorizedClientRegistrationId();
-        var username = auth.getName();
-        var oauth2Client = authorizedClientService.loadAuthorizedClient(clientId, username);
+        var username = clientAuth.getName();
+        var authorizedClient = authorizedClientService.loadAuthorizedClient(clientId, username);
 
-        if (oauth2Client == null) {
+        if (authorizedClient == null) {
             log.warn("Get AccessToken for current user failed: client not found");
             return null;
+        }else{
+            var clientAccessToken = authorizedClient.getAccessToken();
+            log.debug("Get AccessToken for current user {}: end", clientAuth.getName());
         }
 
-        var accessToken = oauth2Client.getAccessToken();
-        log.debug("Get AccessToken for current user {}: end", auth.getName());
         return accessToken;
 
     }
