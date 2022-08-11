@@ -1,4 +1,4 @@
-package com.example.client.support.zitadel;
+package com.example.client.helper.zitadel;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

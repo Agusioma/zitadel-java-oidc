@@ -1,4 +1,4 @@
-package com.example.client.support.zitadel;
+package com.example.client.helper.zitadel;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
