@@ -1,16 +1,14 @@
 package com.example.client.config;
 
-import com.example.client.support.AccessTokenInterceptor;
-import com.example.client.support.TokenAccessor;
+import com.example.client.helper.AccessTokenInterceptor;
+import com.example.client.helper.TokenAccessor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@Slf4j
 @Configuration
 @RequiredArgsConstructor
 class ClientWebConfig {

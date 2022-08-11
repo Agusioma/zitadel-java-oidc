@@ -1,6 +1,5 @@
 package com.example.client.helper.zitadel;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Slf4j
 @Component
 public class ZitadelLogoutHandler implements LogoutHandler {
 
@@ -21,8 +19,6 @@ public class ZitadelLogoutHandler implements LogoutHandler {
 
         var principalUser = (DefaultOidcUser) auth.getPrincipal();
         var idToken = principalUser.getIdToken();
-
-        log.debug("Propagate logout to zitadel for user. userId={}", idToken.getSubject());
 
         var idTokenValue = idToken.getTokenValue();
         var redirectUri = generateUriFromRequest(request);

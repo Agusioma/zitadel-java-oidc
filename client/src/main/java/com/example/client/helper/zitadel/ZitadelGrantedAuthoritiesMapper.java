@@ -17,10 +17,11 @@ public class ZitadelGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper
         var mappedAuthorities = new HashSet<GrantedAuthority>();
 
         grantedAuthorities.forEach(authority -> {
-
-            if (authority instanceof SimpleGrantedAuthority) {
+            
+            if (authority instanceof SimpleGrantedAuthority) {//standard scopes
                 mappedAuthorities.add(authority);
-            }else if (authority instanceof OidcUserAuthority) {
+
+            }else if (authority instanceof OidcUserAuthority) {//reserved scopes
                 mapFromUserInfo(mappedAuthorities, (OidcUserAuthority) authority);
             }
 

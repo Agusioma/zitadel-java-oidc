@@ -1,7 +1,7 @@
 package com.example.client.config;
 
-import com.example.client.support.zitadel.ZitadelGrantedAuthoritiesMapper;
-import com.example.client.support.zitadel.ZitadelLogoutHandler;
+import com.example.client.helper.zitadel.ZitadelGrantedAuthoritiesMapper;
+import com.example.client.helper.zitadel.ZitadelLogoutHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

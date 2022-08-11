@@ -1,7 +1,6 @@
 package com.example.client.helper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -10,7 +9,6 @@ import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
 
-@Slf4j
 @RequiredArgsConstructor
 public class AccessTokenInterceptor implements ClientHttpRequestInterceptor {
 
