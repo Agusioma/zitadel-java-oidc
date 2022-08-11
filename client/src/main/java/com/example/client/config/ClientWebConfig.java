@@ -20,8 +20,8 @@ class ClientWebConfig {
     @Bean
     @Qualifier("zitadel")
     RestTemplate restTemplate() {
-        return new RestTemplateBuilder() //
-                .interceptors(new AccessTokenInterceptor(tokenAccessor)) //
+        return new RestTemplateBuilder() 
+                .interceptors(new AccessTokenInterceptor(tokenAccessor))
                 .build();
     }
 }

@@ -22,8 +22,6 @@ class ClientSecurityConfig {
     public SecurityFilterChain securityChain(HttpSecurity httpSecurity, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
 
         httpSecurity.authorizeRequests(it -> {
-            // declarative route configuration
-            // add additional routes
             it.antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll();
             it.anyRequest().fullyAuthenticated();
         });
@@ -33,9 +31,6 @@ class ClientSecurityConfig {
                     clientRegistrationRepository,
                     OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI //
             );
-            // Note: back-ported the OAuth2AuthorizationRequestCustomizers from Spring Security 5.7,
-            // replace with original version once Spring Boot support Spring Security 5.7.
-            //oauth2AuthRequestResolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
 
             it.authorizationCodeGrant().authorizationRequestResolver(oauth2AuthRequestResolver);
         });
