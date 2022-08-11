@@ -17,8 +17,8 @@ spring:
             user-name-attribute: preferred_username
         registration:
           zitadel:
-            client-id: '173710128481119139@java-oidc'
-            client-secret: 'Tj5ut5ZykJ0LnhzDBWu2GZQGkTbsv7VduKDmUk7mLSSt74QPdDwbw3asZpZxjEGk'
+            client-id: '<your-client-id-here>'
+            client-secret: '<your-client-secret>'
             client-authentication-method: client_secret_basic
             authorizationGrantType: authorization_code
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
